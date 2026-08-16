@@ -19,6 +19,9 @@ client/build/
 Thumbs.db
 *.log
 
+# Private local memory handoff
+PROJECT_CONTEXT_HANDOFF.md
+
 # Antigravity temporary folders
 .agents/scratch/
 .tempmediaStorage/
