@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RECCampusCompanionDatabase",
+  "description": "Full JSON Database Schema for Rajalakshmi Engineering College (REC) Campus Companion Platform",
+  "collections": {
+    "users": {
+      "type": "array",
+      "description": "Authenticated campus users including Day Scholars, Hostellers, Club Leads, Staff, and Admins",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "email": { "type": "string", "pattern": "^[a-zA-Z0-9._%+-]+@rajalakshmi\\.edu\\.in$" },
+          "password": { "type": "string" },
+          "role": { "type": "string", "enum": ["student", "staff", "admin", "lead"] },
+          "gender": { "type": "string" },
+          "department": { "type": "string" },
+          "year": { "type": "string" },
+          "isHosteller": { "type": "boolean" },
+          "isStaff": { "type": "boolean" },
+          "isAdmin": { "type": "boolean" },
+          "isClubLead": { "type": "boolean" },
+          "isClubMember": { "type": "boolean" },
+          "designation": { "type": "string" },
+          "bio": { "type": "string" },
+          "phone": { "type": "string" },
+          "pfpUrl": { "type": "string" },
+          "clubsJoined": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["id", "name", "email", "role"]
+      }
+    },
+    "timetable": {
+      "type": "object",
+      "description": "Departmental period timetables and vacant classroom listings across J Block, I Block, A Block, B block, K block",
+      "properties": {
+        "schedule": { "type": "object" },
+        "freeRooms": { "type": "array" }
+      }
+    },
+    "events": {
+      "type": "array",
+      "description": "Campus events, hackathons, and RSVPs with instant QR entry pass verification",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "category": { "type": "string" },
+          "organizer": { "type": "string" },
+          "date": { "type": "string" },
+          "time": { "type": "string" },
+          "venue": { "type": "string" },
+          "description": { "type": "string" },
+          "bannerUrl": { "type": "string" },
+          "rsvps": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "lostFoundItems": {
+      "type": "array",
+      "description": "Lost and Found board items with image file upload support and claim status tracking",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "category": { "type": "string" },
+          "status": { "type": "string", "enum": ["lost", "found", "claimed"] },
+          "location": { "type": "string" },
+          "description": { "type": "string" },
+          "imageUrl": { "type": "string" },
+          "contactPhone": { "type": "string" },
+          "contactName": { "type": "string" },
+          "dateReported": { "type": "string" }
+        }
+      }
+    },
+    "clubAnnouncements": {
+      "type": "array",
+      "description": "Official club announcements and recruitment notices for Coding Club, Rotaract, IEEE REC, EDC",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "clubName": { "type": "string" },
+          "title": { "type": "string" },
+          "category": { "type": "string" },
+          "content": { "type": "string" },
+          "date": { "type": "string" },
+          "tags": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "mess": {
+      "type": "object",
+      "description": "Weekly hosteller mess menus for Pearl, Ruby, Emerald, Sapphire & Diamond Hostels with dish ratings",
+      "properties": {
+        "rushGauge": { "type": "string" },
+        "hostels": { "type": "array" },
+        "ratings": { "type": "array" }
+      }
+    },
+    "canteen": {
+      "type": "object",
+      "description": "Food court outlets (HUT CAFE, REC CAFE, 6th Sense Garden, Blackbuck Cafe) menus and student reviews",
+      "properties": {
+        "outlets": { "type": "array" },
+        "rushGauge": { "type": "string" },
+        "ratings": { "type": "array" }
+      }
+    },
+    "transport": {
+      "type": "object",
+      "description": "130 REC bus routes, morning & evening trip schedules, driver contacts, and helpline roster",
+      "properties": {
+        "routes": { "type": "array" },
+        "trips": { "type": "array" },
+        "helplines": { "type": "array" }
+      }
+    }
+  }
+}
