@@ -15,7 +15,6 @@ export default function AuthModal({ initialMode = 'login', onClose }) {
   const [department, setDepartment] = useState('CSE');
   const [year, setYear] = useState('2nd Year');
   const [isHosteller, setIsHosteller] = useState(false);
-  const [roomNumber, setRoomNumber] = useState('');
 
   // Status State
   const [loading, setLoading] = useState(false);
@@ -36,7 +35,6 @@ export default function AuthModal({ initialMode = 'login', onClose }) {
         setDepartment(res.data.data.department);
         setYear(res.data.data.year);
         setIsHosteller(res.data.data.isHosteller);
-        if (res.data.data.roomNumber) setRoomNumber(res.data.data.roomNumber);
       } else {
         setRegistryInfo(null);
       }
@@ -67,12 +65,7 @@ export default function AuthModal({ initialMode = 'login', onClose }) {
       if (mode === 'login') {
         await login(email, password);
       } else {
-        if (isHosteller && !roomNumber.trim()) {
-          setError('Hosteller Registration Required: Please provide your Hostel Room Number.');
-          setLoading(false);
-          return;
-        }
-        await register({ name, email, password, gender, department, year, isHosteller, roomNumber: roomNumber.trim() });
+        await register({ name, email, password, gender, department, year, isHosteller });
       }
       onClose();
     } catch (err) {
@@ -277,22 +270,6 @@ export default function AuthModal({ initialMode = 'login', onClose }) {
                   </select>
                 </div>
               </div>
-
-              {isHosteller && (
-                <div className="form-group" style={{ marginTop: '4px' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <Building size={14} color="var(--primary)" /> Hostel Room Number
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="e.g. Room 204 or P-304"
-                    value={roomNumber}
-                    onChange={(e) => setRoomNumber(e.target.value)}
-                    required={isHosteller}
-                  />
-                </div>
-              )}
             </>
           )}
 

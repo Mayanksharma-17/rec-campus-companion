@@ -35,13 +35,16 @@ router.post('/review', verifyToken, (req, res) => {
     return res.status(400).json({ success: false, message: 'Please provide dish name and a valid rating (1-5 stars).' });
   }
 
+  const isStaff = req.user.isStaff || req.user.isAdmin || req.user.role === 'staff' || req.user.role === 'admin';
+  const authorLabel = isStaff ? `${req.user.name} (Staff)` : req.user.name;
+
   const newReview = {
     id: `cant-${Date.now()}`,
     canteenName: canteenName || '6th Sense Garden',
     dishName: dishName.trim(),
     rating: Number(rating),
     comment: comment ? comment.trim() : 'Great food!',
-    studentName: `${req.user.name} (${req.user.designation || 'Student'})`,
+    studentName: authorLabel,
     email: req.user.email,
     createdAt: new Date().toISOString()
   };
@@ -66,13 +69,16 @@ router.post('/rating', verifyToken, (req, res) => {
     return res.status(400).json({ success: false, message: 'Please provide dish name and a valid rating (1-5 stars).' });
   }
 
+  const isStaff = req.user.isStaff || req.user.isAdmin || req.user.role === 'staff' || req.user.role === 'admin';
+  const authorLabel = isStaff ? `${req.user.name} (Staff)` : req.user.name;
+
   const newReview = {
     id: `cant-${Date.now()}`,
     canteenName: canteenName || 'Blackbuck Cafe',
     dishName: dishName.trim(),
     rating: Number(rating),
     comment: comment ? comment.trim() : 'Great food!',
-    studentName: `${req.user.name} (${req.user.designation || 'Student'})`,
+    studentName: authorLabel,
     email: req.user.email,
     createdAt: new Date().toISOString()
   };

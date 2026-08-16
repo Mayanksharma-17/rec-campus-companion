@@ -31,15 +31,18 @@ router.post('/review', verifyToken, requireHosteller, (req, res) => {
     return res.status(400).json({ success: false, message: 'Please provide a valid rating between 1 and 5 stars.' });
   }
 
+  const isStaff = req.user.isStaff || req.user.isAdmin || req.user.role === 'staff' || req.user.role === 'admin';
+  const authorLabel = isStaff ? `${req.user.name} (Staff)` : req.user.name;
+
   const newReview = {
     id: `rev-${Date.now()}`,
     day: day || 'Monday',
-    hostelName: hostelName || req.user.designation || 'Pearl Hostel',
+    hostelName: hostelName || 'Pearl Hostel',
     mealType: mealType || 'Lunch',
     dishName: dishName || 'General Meal',
     rating: Number(rating),
     comment: comment ? comment.trim() : 'No written review.',
-    studentName: `${req.user.name} (${hostelName || 'Hostel Resident'})`,
+    studentName: authorLabel,
     email: req.user.email,
     createdAt: new Date().toISOString()
   };
@@ -63,15 +66,18 @@ router.post('/rating', verifyToken, requireHosteller, (req, res) => {
     return res.status(400).json({ success: false, message: 'Please provide a valid rating between 1 and 5 stars.' });
   }
 
+  const isStaff = req.user.isStaff || req.user.isAdmin || req.user.role === 'staff' || req.user.role === 'admin';
+  const authorLabel = isStaff ? `${req.user.name} (Staff)` : req.user.name;
+
   const newReview = {
     id: `rev-${Date.now()}`,
     day: day || 'Monday',
-    hostelName: hostelName || req.user.designation || 'Pearl Hostel',
+    hostelName: hostelName || 'Pearl Hostel',
     mealType: mealType || 'Lunch',
     dishName: dishName || 'General Meal',
     rating: Number(rating),
     comment: comment ? comment.trim() : 'No written review.',
-    studentName: `${req.user.name} (${hostelName || 'Hostel Resident'})`,
+    studentName: authorLabel,
     email: req.user.email,
     createdAt: new Date().toISOString()
   };

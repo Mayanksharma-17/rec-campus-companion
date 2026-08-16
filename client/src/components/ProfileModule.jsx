@@ -11,14 +11,6 @@ const HOSTELS = [
   "Diamond Hostel"
 ];
 
-const BLOCKS = [
-  "J Block",
-  "I Block",
-  "A Block",
-  "B block",
-  "K block"
-];
-
 export default function ProfileModule() {
   const { user } = useAuth();
 
@@ -30,7 +22,6 @@ export default function ProfileModule() {
   const [department, setDepartment] = useState(user?.department || 'CSE');
   const [year, setYear] = useState(user?.year || '2nd Year');
   const [isHosteller, setIsHosteller] = useState(user?.isHosteller || false);
-  const [roomNumber, setRoomNumber] = useState(user?.roomNumber || '');
   const [designation, setDesignation] = useState(user?.designation || 'Pearl Hostel');
 
   const [loading, setLoading] = useState(false);
@@ -56,8 +47,9 @@ export default function ProfileModule() {
     e.preventDefault();
     try {
       setLoading(true);
+      const finalDesignation = isHosteller ? designation : 'Day Scholar Student';
       const res = await API.put('/auth/profile', {
-        name, pfpUrl, bio, phone, gender, department, year, isHosteller, roomNumber, designation
+        name, pfpUrl, bio, phone, gender, department, year, isHosteller, designation: finalDesignation
       });
       if (res.data.success) {
         localStorage.setItem('rec_campus_token', res.data.token);
@@ -80,7 +72,7 @@ export default function ProfileModule() {
           <User color="#2563eb" size={28} /> My Student Profile & Settings
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '4px' }}>
-          Customize your profile picture (PFP), personal details, hostel (Pearl, Ruby, Emerald, Sapphire, Diamond), and block affiliations.
+          Customize your profile picture (PFP), personal details, and hostel affiliations.
         </p>
       </div>
 
@@ -164,7 +156,7 @@ export default function ProfileModule() {
                 className="form-control"
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
-                placeholder="e.g. 2nd Year CSE | Web Developer | Pearl Hostel"
+                placeholder="e.g. 2nd Year CSE | Web Developer"
               />
             </div>
 
@@ -204,7 +196,7 @@ export default function ProfileModule() {
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+            <div style={{ display: isHosteller ? 'grid' : 'block', gridTemplateColumns: isHosteller ? '1fr 1fr' : '1fr', gap: '14px' }}>
               <div className="form-group">
                 <label>Student Residence Type</label>
                 <select
@@ -217,28 +209,15 @@ export default function ProfileModule() {
                 </select>
               </div>
 
-              <div className="form-group">
-                <label>{isHosteller ? 'Select Hostel Name' : 'Select Primary Campus Block'}</label>
-                <select className="form-control" value={designation} onChange={(e) => setDesignation(e.target.value)}>
-                  {isHosteller
-                    ? HOSTELS.map((h, i) => <option key={i} value={h}>{h}</option>)
-                    : BLOCKS.map((b, i) => <option key={i} value={b}>{b}</option>)
-                  }
-                </select>
-              </div>
+              {isHosteller && (
+                <div className="form-group">
+                  <label>Select Hostel Name</label>
+                  <select className="form-control" value={designation} onChange={(e) => setDesignation(e.target.value)}>
+                    {HOSTELS.map((h, i) => <option key={i} value={h}>{h}</option>)}
+                  </select>
+                </div>
+              )}
             </div>
-
-            {isHosteller && (
-              <div className="form-group">
-                <label>Hostel Room Number</label>
-                <input
-                  className="form-control"
-                  placeholder="e.g. Room 204 or P-304"
-                  value={roomNumber}
-                  onChange={(e) => setRoomNumber(e.target.value)}
-                />
-              </div>
-            )}
 
             <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '12px', fontSize: '15px', marginTop: '14px', fontWeight: 800 }} disabled={loading}>
               <Save size={16} /> {loading ? 'Saving Changes...' : 'Save Profile Changes'}
@@ -275,7 +254,7 @@ export default function ProfileModule() {
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Location / Hostel:</span>
                 <span style={{ fontWeight: 800, color: '#059669' }}>
-                  {designation} {isHosteller && (roomNumber || user?.roomNumber) ? `(Room ${roomNumber || user?.roomNumber})` : ''}
+                  {isHosteller ? (user?.designation || designation) : 'Day Scholar Student'}
                 </span>
               </div>
             </div>

@@ -12,12 +12,11 @@ const EMAIL_REGISTRY = [
     department: "Administration",
     year: "Staff",
     isHosteller: true,
-    roomNumber: "A-101",
     isClubLead: true,
     isClubMember: true,
     isStaff: true,
     clubsJoined: ["Coding Club", "Rotaract Club", "IEEE REC", "EDC REC", "Fine Arts Club"],
-    designation: "Campus Admin & Principal (A Block)"
+    designation: "Campus Admin & Principal"
   },
   {
     email: "hod.cse@rajalakshmi.edu.in",
@@ -27,12 +26,11 @@ const EMAIL_REGISTRY = [
     department: "CSE",
     year: "Staff",
     isHosteller: false,
-    roomNumber: "",
     isClubLead: false,
     isClubMember: true,
     isStaff: true,
     clubsJoined: ["Coding Club", "IEEE REC"],
-    designation: "HOD - Computer Science (J Block)"
+    designation: "HOD - Computer Science"
   },
   {
     email: "staff.ece@rajalakshmi.edu.in",
@@ -42,12 +40,11 @@ const EMAIL_REGISTRY = [
     department: "ECE",
     year: "Staff",
     isHosteller: false,
-    roomNumber: "",
     isClubLead: false,
     isClubMember: true,
     isStaff: true,
     clubsJoined: ["IEEE REC"],
-    designation: "Assistant Professor - ECE (I Block)"
+    designation: "Assistant Professor - ECE"
   },
   {
     email: "lead.coding@rajalakshmi.edu.in",
@@ -57,12 +54,11 @@ const EMAIL_REGISTRY = [
     department: "CSE",
     year: "3rd Year",
     isHosteller: true,
-    roomNumber: "P-304",
     isClubLead: true,
     isClubMember: true,
     isStaff: false,
     clubsJoined: ["Coding Club"],
-    designation: "President - Coding Club REC (Pearl Hostel - Room P-304)"
+    designation: "President - Coding Club REC (Pearl Hostel)"
   },
   {
     email: "lead.rotaract@rajalakshmi.edu.in",
@@ -72,12 +68,11 @@ const EMAIL_REGISTRY = [
     department: "IT",
     year: "3rd Year",
     isHosteller: false,
-    roomNumber: "",
     isClubLead: true,
     isClubMember: true,
     isStaff: false,
     clubsJoined: ["Rotaract Club", "Fine Arts Club"],
-    designation: "President - Rotaract REC (B block)"
+    designation: "President - Rotaract REC"
   },
   {
     email: "member.rotaract@rajalakshmi.edu.in",
@@ -87,12 +82,11 @@ const EMAIL_REGISTRY = [
     department: "ECE",
     year: "2nd Year",
     isHosteller: true,
-    roomNumber: "E-212",
     isClubLead: false,
     isClubMember: true,
     isStaff: false,
     clubsJoined: ["Rotaract Club"],
-    designation: "Active Member - Rotaract (Emerald Hostel - Room E-212)"
+    designation: "Active Member - Rotaract (Emerald Hostel)"
   },
   {
     email: "member.ieee@rajalakshmi.edu.in",
@@ -102,12 +96,11 @@ const EMAIL_REGISTRY = [
     department: "EEE",
     year: "2nd Year",
     isHosteller: false,
-    roomNumber: "",
     isClubLead: false,
     isClubMember: true,
     isStaff: false,
     clubsJoined: ["IEEE REC"],
-    designation: "Member - IEEE REC Chapter (K block)"
+    designation: "Member - IEEE REC Chapter"
   },
   {
     email: "hostel.student1@rajalakshmi.edu.in",
@@ -117,12 +110,11 @@ const EMAIL_REGISTRY = [
     department: "CSE",
     year: "2nd Year",
     isHosteller: true,
-    roomNumber: "204",
     isClubLead: false,
     isClubMember: false,
     isStaff: false,
     clubsJoined: [],
-    designation: "Hostel Resident (Pearl Hostel - Room 204)"
+    designation: "Pearl Hostel Resident"
   },
   {
     email: "hostel.student2@rajalakshmi.edu.in",
@@ -132,12 +124,11 @@ const EMAIL_REGISTRY = [
     department: "MECH",
     year: "3rd Year",
     isHosteller: true,
-    roomNumber: "108",
     isClubLead: false,
     isClubMember: false,
     isStaff: false,
     clubsJoined: [],
-    designation: "Hostel Resident (Ruby Hostel - Room 108)"
+    designation: "Ruby Hostel Resident"
   },
   {
     email: "student.dayscholar@rajalakshmi.edu.in",
@@ -147,12 +138,11 @@ const EMAIL_REGISTRY = [
     department: "IT",
     year: "1st Year",
     isHosteller: false,
-    roomNumber: "",
     isClubLead: false,
     isClubMember: false,
     isStaff: false,
     clubsJoined: [],
-    designation: "Day Scholar Student (J Block)"
+    designation: "Day Scholar Student"
   }
 ];
 
