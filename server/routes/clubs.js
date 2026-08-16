@@ -21,7 +21,7 @@ router.get('/', verifyToken, (req, res) => {
 });
 
 // Get Announcements Feed
-router.get('/announcements', verifyToken, requireClubAccess, (req, res) => {
+router.get('/announcements', verifyToken, (req, res) => {
   const db = getDatabase();
   const { tag, search } = req.query;
   let filtered = db.clubAnnouncements;

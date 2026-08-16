@@ -5,6 +5,7 @@ import { Calendar, PartyPopper, Search, Megaphone, Utensils, Coffee, Bus, Shield
 export default function Dashboard() {
   const { user, setActiveModule } = useAuth();
   const isStaffOrAdmin = user?.isStaff || user?.isAdmin;
+  const isHostellerOrStaff = user?.isHosteller || isStaffOrAdmin;
 
   return (
     <div>
@@ -164,9 +165,6 @@ export default function Dashboard() {
             <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(245,158,11,0.15)', color: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Megaphone size={24} />
             </div>
-            {!isStaffOrAdmin && !(user?.isClubMember) && (
-              <span className="badge badge-danger"><Lock size={12} /> Member Locked</span>
-            )}
           </div>
           <h3 style={{ fontSize: '19px', fontWeight: 800, marginBottom: '6px', color: 'var(--text-main)' }}>4. Club Announcements</h3>
           <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '18px', lineHeight: '1.55' }}>
@@ -177,24 +175,23 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Module 5 */}
-        <div className="card" onClick={() => setActiveModule('mess')} style={{ cursor: 'pointer' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(239,68,68,0.15)', color: '#dc2626', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Utensils size={24} />
+        {/* Module 5 - Mess Menu & Ratings (Visible for Hostellers, Staff & Admins) */}
+        {isHostellerOrStaff && (
+          <div className="card" onClick={() => setActiveModule('mess')} style={{ cursor: 'pointer' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(239,68,68,0.15)', color: '#dc2626', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Utensils size={24} />
+              </div>
             </div>
-            {!isStaffOrAdmin && !user?.isHosteller && (
-              <span className="badge badge-danger"><Lock size={12} /> Hostellers Locked</span>
-            )}
+            <h3 style={{ fontSize: '19px', fontWeight: 800, marginBottom: '6px', color: 'var(--text-main)' }}>5. Mess Menu & Ratings</h3>
+            <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '18px', lineHeight: '1.55' }}>
+              Weekly food menu for Pearl, Ruby, Emerald, Sapphire & Diamond Hostels with live ratings.
+            </p>
+            <div style={{ fontSize: '14px', color: '#dc2626', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
+              Check Mess Menu <ArrowRight size={15} />
+            </div>
           </div>
-          <h3 style={{ fontSize: '19px', fontWeight: 800, marginBottom: '6px', color: 'var(--text-main)' }}>5. Mess Menu & Ratings</h3>
-          <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '18px', lineHeight: '1.55' }}>
-            Weekly food menu for Pearl, Ruby, Emerald, Sapphire & Diamond Hostels with live ratings.
-          </p>
-          <div style={{ fontSize: '14px', color: '#dc2626', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
-            Check Mess Menu <ArrowRight size={15} />
-          </div>
-        </div>
+        )}
 
         {/* Module 6 */}
         <div className="card" onClick={() => setActiveModule('canteen')} style={{ cursor: 'pointer' }}>

@@ -22,27 +22,22 @@ export default function ClubsModule() {
   // Join Club Modal
   const [showJoinModal, setShowJoinModal] = useState(false);
 
-  const hasAccess = user?.isClubMember || user?.isClubLead || user?.isStaff || user?.isAdmin;
   const canPost = user?.isClubLead || user?.isStaff || user?.isAdmin;
 
   // Real-Time Multi-User Sync Effect
   useEffect(() => {
     fetchClubs();
-    if (hasAccess) {
-      if (syncData && syncData.clubAnnouncements) {
-        let filtered = syncData.clubAnnouncements;
-        if (tagFilter !== 'All') {
-          filtered = filtered.filter(a => a.tags?.includes(tagFilter) || a.category === tagFilter || a.clubTag === tagFilter);
-        }
-        setAnnouncements(filtered);
-        setLoading(false);
-      } else {
-        fetchAnnouncements();
+    if (syncData && syncData.clubAnnouncements) {
+      let filtered = syncData.clubAnnouncements;
+      if (tagFilter !== 'All') {
+        filtered = filtered.filter(a => a.tags?.includes(tagFilter) || a.category === tagFilter || a.clubTag === tagFilter);
       }
+      setAnnouncements(filtered);
+      setLoading(false);
     } else {
-      setAccessDenied(true);
+      fetchAnnouncements();
     }
-  }, [hasAccess, tagFilter, syncData]);
+  }, [tagFilter, syncData]);
 
   const fetchClubs = async () => {
     try {
@@ -58,7 +53,6 @@ export default function ClubsModule() {
   const fetchAnnouncements = async () => {
     try {
       setLoading(true);
-      setAccessDenied(false);
       let url = `/clubs/announcements?tag=${tagFilter}`;
       if (searchQuery) url += `&search=${encodeURIComponent(searchQuery)}`;
       const res = await API.get(url);
@@ -66,9 +60,7 @@ export default function ClubsModule() {
         setAnnouncements(res.data.data);
       }
     } catch (err) {
-      if (err.response?.status === 403) {
-        setAccessDenied(true);
-      }
+      console.warn('Announcements fetch error:', err);
     } finally {
       setLoading(false);
     }
@@ -90,7 +82,7 @@ export default function ClubsModule() {
     e.preventDefault();
     try {
       const res = await API.post('/clubs/announcements', {
-        title, category, content, clubName: user?.clubsJoined[0] || 'Coding Club REC'
+        title, category, content, clubName: user?.clubsJoined?.[0] || 'Coding Club REC'
       });
       if (res.data.success) {
         setPostMsg('Announcement successfully published!');
@@ -127,24 +119,6 @@ export default function ClubsModule() {
         )}
       </div>
 
-      {/* Restricted Access Banner for Non-Club Members */}
-      {accessDenied && (
-        <div className="restricted-box">
-          <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: 'rgba(239,68,68,0.15)', color: '#dc2626', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px' }}>
-            <Lock size={26} />
-          </div>
-          <h3>Club Portal Restricted Access</h3>
-          <p>
-            Official club announcements and search are strictly reserved for verified REC Club Members, Club Leads, Staff, and Admins.
-          </p>
-          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
-            <button className="btn btn-primary" onClick={() => setShowJoinModal(true)}>
-              <Users size={16} /> Join a REC Club to Unlock
-            </button>
-          </div>
-        </div>
-      )}
-
       {/* Clubs Directory */}
       <div style={{ marginBottom: '36px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 800, marginBottom: '18px', color: 'var(--text-main)' }}>REC Recognized Clubs & Student Chapters</h2>
@@ -177,45 +151,43 @@ export default function ClubsModule() {
       </div>
 
       {/* Announcements Feed */}
-      {!accessDenied && (
-        <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px', flexWrap: 'wrap', gap: '12px' }}>
-            <h2 style={{ fontSize: '20px', fontWeight: 800, color: 'var(--text-main)' }}>Club Announcements Feed</h2>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-              {['All', 'Recruitment', 'Notice', 'Event'].map((tag) => (
-                <button
-                  key={tag}
-                  onClick={() => setTagFilter(tag)}
-                  className={`btn btn-sm ${tagFilter === tag ? 'btn-primary' : 'btn-secondary'}`}
-                  style={{ borderRadius: '20px', padding: '8px 16px', fontWeight: 800 }}
-                >
-                  {tag}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-            {announcements.map((ann) => (
-              <div key={ann.id} className="card" style={{ borderLeft: '4px solid #d97706' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                  <span className="badge badge-warning" style={{ fontWeight: 800 }}>{ann.clubName}</span>
-                  <span style={{ fontSize: '13px', color: 'var(--text-muted)', fontWeight: 600 }}>{ann.date}</span>
-                </div>
-                <h3 style={{ fontSize: '19px', fontWeight: 800, marginBottom: '8px', color: 'var(--text-main)' }}>{ann.title}</h3>
-                <p style={{ fontSize: '14px', color: 'var(--text-main)', lineHeight: '1.65', marginBottom: '14px' }}>{ann.content}</p>
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                  {ann.tags?.map((t, idx) => (
-                    <span key={idx} style={{ fontSize: '12px', padding: '4px 12px', borderRadius: '8px', background: 'var(--bg-elevated)', color: 'var(--text-main)', border: '1px solid var(--border-color)', fontWeight: 700 }}>
-                      #{t}
-                    </span>
-                  ))}
-                </div>
-              </div>
+      <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px', flexWrap: 'wrap', gap: '12px' }}>
+          <h2 style={{ fontSize: '20px', fontWeight: 800, color: 'var(--text-main)' }}>Club Announcements Feed</h2>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            {['All', 'Recruitment', 'Notice', 'Event'].map((tag) => (
+              <button
+                key={tag}
+                onClick={() => setTagFilter(tag)}
+                className={`btn btn-sm ${tagFilter === tag ? 'btn-primary' : 'btn-secondary'}`}
+                style={{ borderRadius: '20px', padding: '8px 16px', fontWeight: 800 }}
+              >
+                {tag}
+              </button>
             ))}
           </div>
         </div>
-      )}
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+          {announcements.map((ann) => (
+            <div key={ann.id} className="card" style={{ borderLeft: '4px solid #d97706' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <span className="badge badge-warning" style={{ fontWeight: 800 }}>{ann.clubName}</span>
+                <span style={{ fontSize: '13px', color: 'var(--text-muted)', fontWeight: 600 }}>{ann.date}</span>
+              </div>
+              <h3 style={{ fontSize: '19px', fontWeight: 800, marginBottom: '8px', color: 'var(--text-main)' }}>{ann.title}</h3>
+              <p style={{ fontSize: '14px', color: 'var(--text-main)', lineHeight: '1.65', marginBottom: '14px' }}>{ann.content}</p>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                {ann.tags?.map((t, idx) => (
+                  <span key={idx} style={{ fontSize: '12px', padding: '4px 12px', borderRadius: '8px', background: 'var(--bg-elevated)', color: 'var(--text-main)', border: '1px solid var(--border-color)', fontWeight: 700 }}>
+                    #{t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Join Modal */}
       {showJoinModal && (

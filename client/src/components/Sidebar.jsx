@@ -1,23 +1,30 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, Calendar, PartyPopper, Search, Megaphone, Utensils, Coffee, Bus, User, Lock, CheckCircle2 } from 'lucide-react';
+import { LayoutDashboard, Calendar, PartyPopper, Search, Megaphone, Utensils, Coffee, Bus, User, CheckCircle2 } from 'lucide-react';
 
 export default function Sidebar() {
   const { user, activeModule, setActiveModule } = useAuth();
 
   const isStaffOrAdmin = user?.isStaff || user?.isAdmin;
+  const isHostellerOrStaff = user?.isHosteller || isStaffOrAdmin;
 
-  const navItems = [
-    { id: 'dashboard', label: 'Dashboard Overview', icon: LayoutDashboard, restricted: false },
-    { id: 'profile', label: 'My Student Profile', icon: User, restricted: false },
-    { id: 'timetable', label: '1. Timetable Viewer', icon: Calendar, restricted: false },
-    { id: 'events', label: '2. Events Feed & RSVP', icon: PartyPopper, restricted: false },
-    { id: 'lostFound', label: '3. Lost & Found Board', icon: Search, restricted: false },
-    { id: 'clubs', label: '4. Club Announcements', icon: Megaphone, restricted: !isStaffOrAdmin && !(user?.isClubMember || user?.isClubLead) },
-    { id: 'mess', label: '5. Mess Menu & Ratings', icon: Utensils, restricted: !isStaffOrAdmin && !user?.isHosteller },
-    { id: 'canteen', label: '6. Canteen & Food Court', icon: Coffee, restricted: false },
-    { id: 'transport', label: '7. Bus Transport Hub', icon: Bus, restricted: false }
+  const allNavItems = [
+    { id: 'dashboard', label: 'Dashboard Overview', icon: LayoutDashboard },
+    { id: 'profile', label: 'My Student Profile', icon: User },
+    { id: 'timetable', label: '1. Timetable Viewer', icon: Calendar },
+    { id: 'events', label: '2. Events Feed & RSVP', icon: PartyPopper },
+    { id: 'lostFound', label: '3. Lost & Found Board', icon: Search },
+    { id: 'clubs', label: '4. Club Announcements', icon: Megaphone },
+    { id: 'mess', label: '5. Mess Menu & Ratings', icon: Utensils, hostellerOnly: true },
+    { id: 'canteen', label: '6. Canteen & Food Court', icon: Coffee },
+    { id: 'transport', label: '7. Bus Transport Hub', icon: Bus }
   ];
+
+  // Filter out Mess for Day Scholars (show both Mess & Canteen only for Hostellers / Staff / Admins)
+  const navItems = allNavItems.filter(item => {
+    if (item.hostellerOnly && !isHostellerOrStaff) return false;
+    return true;
+  });
 
   return (
     <aside style={{
@@ -37,7 +44,6 @@ export default function Sidebar() {
       {navItems.map((item) => {
         const Icon = item.icon;
         const isActive = activeModule === item.id;
-        const isRestricted = item.restricted;
 
         return (
           <button
@@ -54,7 +60,7 @@ export default function Sidebar() {
               background: isActive
                 ? 'linear-gradient(135deg, rgba(106,27,154,0.22), rgba(142,36,170,0.14))'
                 : 'transparent',
-              color: isActive ? 'var(--rec-purple)' : isRestricted ? 'var(--text-dim)' : 'var(--text-main)',
+              color: isActive ? 'var(--rec-purple)' : 'var(--text-main)',
               cursor: 'pointer',
               fontWeight: isActive ? 800 : 600,
               fontSize: '14px',
@@ -76,12 +82,9 @@ export default function Sidebar() {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <Icon size={18} color={isActive ? 'var(--rec-purple)' : isRestricted ? 'var(--text-dim)' : 'var(--text-muted)'} />
+              <Icon size={18} color={isActive ? 'var(--rec-purple)' : 'var(--text-muted)'} />
               <span>{item.label}</span>
             </div>
-            {isRestricted && (
-              <Lock size={14} color="#ef4444" title="Restricted Access" />
-            )}
           </button>
         );
       })}
@@ -111,23 +114,19 @@ export default function Sidebar() {
               <CheckCircle2 size={13} color="#10b981" /> Lost & Found: <span style={{ color: 'var(--text-main)', fontWeight: 700 }}>Granted</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <CheckCircle2 size={13} color="#10b981" /> Club Notices: <span style={{ color: 'var(--text-main)', fontWeight: 700 }}>Granted</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <CheckCircle2 size={13} color="#10b981" /> Canteen Hub: <span style={{ color: 'var(--text-main)', fontWeight: 700 }}>Granted</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <CheckCircle2 size={13} color="#10b981" /> Bus Transport: <span style={{ color: 'var(--text-main)', fontWeight: 700 }}>Granted</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <CheckCircle2 size={13} color={isStaffOrAdmin || user.isClubMember ? '#10b981' : '#ef4444'} /> Club Notices:
-              <span style={{ color: isStaffOrAdmin || user.isClubMember ? '#059669' : '#dc2626', fontWeight: 700 }}>
-                {isStaffOrAdmin || user.isClubMember ? 'Allowed' : 'Locked'}
-              </span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <CheckCircle2 size={13} color={isStaffOrAdmin || user.isHosteller ? '#10b981' : '#ef4444'} /> Mess Ratings:
-              <span style={{ color: isStaffOrAdmin || user.isHosteller ? '#059669' : '#dc2626', fontWeight: 700 }}>
-                {isStaffOrAdmin || user.isHosteller ? 'Allowed' : 'Locked'}
-              </span>
-            </div>
+            {isHostellerOrStaff && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <CheckCircle2 size={13} color="#10b981" /> Mess Ratings: <span style={{ color: 'var(--text-main)', fontWeight: 700 }}>Granted</span>
+              </div>
+            )}
           </div>
         </div>
       )}
