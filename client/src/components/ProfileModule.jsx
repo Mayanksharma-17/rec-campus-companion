@@ -235,11 +235,18 @@ export default function ProfileModule() {
                 <h3 style={{ fontSize: '22px', fontWeight: 900, marginTop: '6px', color: 'var(--text-main)' }}>{user?.name}</h3>
                 <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>{user?.email}</p>
               </div>
-              <img
-                src={pfpUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name}`}
-                alt="Avatar"
-                style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #2563eb' }}
-              />
+              <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                <img
+                  src="/rec_logo.jpg"
+                  alt="REC Logo"
+                  style={{ width: '48px', height: '48px', borderRadius: '10px', objectFit: 'contain', background: '#ffffff', padding: '3px', border: '1px solid var(--border-color)', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}
+                />
+                <img
+                  src={pfpUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name}`}
+                  alt="Avatar"
+                  style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #2563eb' }}
+                />
+              </div>
             </div>
 
             <div style={{ background: 'var(--bg-elevated)', padding: '16px', borderRadius: '12px', fontSize: '14px', display: 'flex', flexDirection: 'column', gap: '10px', border: '1px solid var(--border-color)' }}>

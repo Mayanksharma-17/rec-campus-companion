@@ -27,6 +27,20 @@ export default function Dashboard() {
       }}>
         <div style={{ position: 'relative', zIndex: 2, maxWidth: '700px' }}>
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap' }}>
+            <img
+              src="/rec_logo.jpg"
+              alt="REC Official Logo"
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '10px',
+                objectFit: 'contain',
+                background: '#ffffff',
+                padding: '2px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                border: '1px solid rgba(255,255,255,0.4)'
+              }}
+            />
             <span style={{ background: 'rgba(255, 255, 255, 0.2)', color: '#ffffff', border: '1px solid rgba(255, 255, 255, 0.35)', padding: '4px 14px', borderRadius: '20px', fontSize: '11px', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
               <Award size={13} /> NAAC A++ ACCREDITED • AUTONOMOUS
             </span>

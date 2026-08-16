@@ -109,22 +109,20 @@ export default function LoginPage() {
         {/* Left Column: Branding & Demo Quick-Login Grid */}
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-            <div style={{
-              width: '48px',
-              height: '48px',
-              borderRadius: '14px',
-              background: 'linear-gradient(135deg, #6A1B9A, #5A1582)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 900,
-              color: '#ffffff',
-              fontSize: '20px',
-              boxShadow: '0 8px 24px rgba(106,27,154,0.4)',
-              border: '1px solid rgba(255,255,255,0.2)'
-            }}>
-              REC
-            </div>
+            <img
+              src="/rec_logo.jpg"
+              alt="Rajalakshmi Engineering College Logo"
+              style={{
+                width: '56px',
+                height: '56px',
+                borderRadius: '14px',
+                objectFit: 'contain',
+                background: '#ffffff',
+                padding: '4px',
+                boxShadow: '0 8px 24px rgba(106,27,154,0.4)',
+                border: '1px solid rgba(255,255,255,0.3)'
+              }}
+            />
             <div>
               <span className="badge badge-purple" style={{ background: 'rgba(168,85,247,0.2)', color: '#e9d5ff', border: '1px solid rgba(168,85,247,0.4)' }}>
                 <ShieldCheck size={12} /> OFFICIAL CAMPUS HUB

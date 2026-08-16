@@ -37,25 +37,20 @@ export default function Navbar() {
       {/* Left Container: Brand & Left-Aligned Theme Switcher */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px', cursor: 'pointer' }} onClick={() => setActiveModule('dashboard')}>
-          <div style={{
-            width: '46px',
-            height: '46px',
-            borderRadius: '14px',
-            background: 'linear-gradient(135deg, #6A1B9A, #5A1582)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontWeight: 900,
-            color: 'white',
-            fontSize: '15px',
-            boxShadow: '0 4px 16px rgba(106,27,154,0.4)',
-            letterSpacing: '0.5px',
-            border: '1px solid rgba(255,255,255,0.2)'
-          }}>
-            <span>REC</span>
-            <span style={{ fontSize: '7px', opacity: 0.8, marginTop: '-2px' }}>ESTD 1997</span>
-          </div>
+          <img
+            src="/rec_logo.jpg"
+            alt="Rajalakshmi Engineering College Logo"
+            style={{
+              width: '46px',
+              height: '46px',
+              borderRadius: '12px',
+              objectFit: 'contain',
+              background: '#ffffff',
+              padding: '3px',
+              boxShadow: '0 4px 16px rgba(106,27,154,0.4)',
+              border: '1px solid rgba(255,255,255,0.3)'
+            }}
+          />
 
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
