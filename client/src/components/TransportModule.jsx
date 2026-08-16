@@ -43,7 +43,7 @@ export default function TransportModule() {
             <span className="badge badge-primary" style={{ fontWeight: 800 }}><ShieldCheck size={13} /> OFFICIAL REC TRANSPORT PORTAL</span>
           </div>
           <h1 style={{ fontSize: '26px', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
-            <Bus color="#2563eb" size={28} /> 7. REC Bus Transport Hub
+            <Bus color="#2563eb" size={28} /> REC Bus Transport Hub
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '4px' }}>
             130 buses across all major Chennai routes. Morning & Return trip schedules, bus bay positions, and coordinator helplines.

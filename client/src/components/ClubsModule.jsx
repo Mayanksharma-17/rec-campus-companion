@@ -105,7 +105,7 @@ export default function ClubsModule() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px', flexWrap: 'wrap', gap: '16px' }}>
         <div>
           <h1 style={{ fontSize: '26px', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
-            <Megaphone color="#d97706" size={28} /> 4. Club Announcements & Search Portal
+            <Megaphone color="#d97706" size={28} /> Club Announcements & Search Portal
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '4px' }}>
             Official notices, recruitment drives, and event updates for Coding Club, Rotaract, IEEE REC & EDC.

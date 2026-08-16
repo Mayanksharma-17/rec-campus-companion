@@ -8,22 +8,31 @@ export default function Sidebar() {
   const isStaffOrAdmin = user?.isStaff || user?.isAdmin;
   const isHostellerOrStaff = user?.isHosteller || isStaffOrAdmin;
 
-  const allNavItems = [
-    { id: 'dashboard', label: 'Dashboard Overview', icon: LayoutDashboard },
-    { id: 'profile', label: 'My Student Profile', icon: User },
-    { id: 'timetable', label: '1. Timetable Viewer', icon: Calendar },
-    { id: 'events', label: '2. Events Feed & RSVP', icon: PartyPopper },
-    { id: 'lostFound', label: '3. Lost & Found Board', icon: Search },
-    { id: 'clubs', label: '4. Club Announcements', icon: Megaphone },
-    { id: 'mess', label: '5. Mess Menu & Ratings', icon: Utensils, hostellerOnly: true },
-    { id: 'canteen', label: '6. Canteen & Food Court', icon: Coffee },
-    { id: 'transport', label: '7. Bus Transport Hub', icon: Bus }
+  const rawNavItems = [
+    { id: 'dashboard', label: 'Dashboard Overview', icon: LayoutDashboard, isUtility: false },
+    { id: 'profile', label: 'My Student Profile', icon: User, isUtility: false },
+    { id: 'timetable', label: 'Timetable Viewer', icon: Calendar, isUtility: true },
+    { id: 'events', label: 'Events Feed & RSVP', icon: PartyPopper, isUtility: true },
+    { id: 'lostFound', label: 'Lost & Found Board', icon: Search, isUtility: true },
+    { id: 'clubs', label: 'Club Announcements', icon: Megaphone, isUtility: true },
+    { id: 'mess', label: 'Mess Menu & Ratings', icon: Utensils, hostellerOnly: true, isUtility: true },
+    { id: 'canteen', label: 'Canteen & Food Court', icon: Coffee, isUtility: true },
+    { id: 'transport', label: 'Bus Transport Hub', icon: Bus, isUtility: true }
   ];
 
-  // Filter out Mess for Day Scholars (show both Mess & Canteen only for Hostellers / Staff / Admins)
-  const navItems = allNavItems.filter(item => {
+  // Filter out Mess for Day Scholars & calculate dynamic sequential numbering (1, 2, 3...)
+  const visibleItems = rawNavItems.filter(item => {
     if (item.hostellerOnly && !isHostellerOrStaff) return false;
     return true;
+  });
+
+  let utilityIndex = 0;
+  const navItems = visibleItems.map(item => {
+    if (item.isUtility) {
+      utilityIndex++;
+      return { ...item, displayLabel: `${utilityIndex}. ${item.label}` };
+    }
+    return { ...item, displayLabel: item.label };
   });
 
   return (
@@ -83,7 +92,7 @@ export default function Sidebar() {
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <Icon size={18} color={isActive ? 'var(--rec-purple)' : 'var(--text-muted)'} />
-              <span>{item.label}</span>
+              <span>{item.displayLabel}</span>
             </div>
           </button>
         );

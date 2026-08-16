@@ -142,7 +142,7 @@ export default function LostFoundModule() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px', flexWrap: 'wrap', gap: '16px' }}>
         <div>
           <h1 style={{ fontSize: '26px', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
-            <Search color="#059669" size={28} /> 3. Lost & Found Campus Board
+            <Search color="#059669" size={28} /> Lost & Found Campus Board
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '4px' }}>
             Report missing college IDs, keys, electronics at HUT CAFE, REC CAFE, J Block, I Block, or hostels.

@@ -54,7 +54,7 @@ export default function TimetableModule() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px', flexWrap: 'wrap', gap: '16px' }}>
         <div>
           <h1 style={{ fontSize: '26px', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
-            <Calendar color="#2563eb" size={28} /> 1. Timetable & Vacant Room Locator
+            <Calendar color="#2563eb" size={28} /> Timetable & Vacant Room Locator
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '4px' }}>
             Class-wise period schedule across J Block, I Block, A Block & vacant lecture halls.

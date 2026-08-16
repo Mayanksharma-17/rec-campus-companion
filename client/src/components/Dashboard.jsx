@@ -124,121 +124,47 @@ export default function Dashboard() {
         Campus Utility Modules
       </h2>
 
-      <div className="grid-3" style={{ marginBottom: '36px' }}>
-        {/* Module 1 */}
-        <div className="card" onClick={() => setActiveModule('timetable')} style={{ cursor: 'pointer' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(59,130,246,0.15)', color: '#2563eb', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Calendar size={24} />
-            </div>
-          </div>
-          <h3 style={{ fontSize: '19px', fontWeight: 800, marginBottom: '6px', color: 'var(--text-main)' }}>1. Timetable Viewer</h3>
-          <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '18px', lineHeight: '1.55' }}>
-            Class schedule across J Block, I Block, A Block, B block, K block & vacant room locator.
-          </p>
-          <div style={{ fontSize: '14px', color: '#2563eb', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
-            Open Timetable <ArrowRight size={15} />
-          </div>
-        </div>
+      {(() => {
+        const rawModules = [
+          { id: 'timetable', title: 'Timetable Viewer', icon: Calendar, iconBg: 'rgba(59,130,246,0.15)', iconColor: '#2563eb', desc: 'Class schedule across J Block, I Block, A Block, B block, K block & vacant room locator.', btnText: 'Open Timetable', btnColor: '#2563eb' },
+          { id: 'events', title: 'Events Feed & RSVP', icon: PartyPopper, iconBg: 'rgba(168,85,247,0.18)', iconColor: 'var(--rec-purple)', desc: 'Events at Indoor auditorium, REC CAFE Lawn & J Block with instant Digital QR Entry Pass.', btnText: 'Explore Events', btnColor: 'var(--rec-purple)' },
+          { id: 'lostFound', title: 'Lost & Found Board', icon: Search, iconBg: 'rgba(16,185,129,0.15)', iconColor: '#059669', desc: 'Report missing items at HUT CAFE, REC CAFE, J Block or hostels with image file upload.', btnText: 'View Board', btnColor: '#059669' },
+          { id: 'clubs', title: 'Club Announcements', icon: Megaphone, iconBg: 'rgba(245,158,11,0.15)', iconColor: '#d97706', desc: 'Notices & recruitment drives for Coding Club, Rotaract, IEEE REC in Indoor auditorium.', btnText: 'Open Club Portal', btnColor: '#d97706' },
+          { id: 'mess', title: 'Mess Menu & Ratings', icon: Utensils, iconBg: 'rgba(239,68,68,0.15)', iconColor: '#dc2626', desc: 'Weekly food menu for Pearl, Ruby, Emerald, Sapphire & Diamond Hostels with live ratings.', btnText: 'Check Mess Menu', btnColor: '#dc2626', hostellerOnly: true },
+          { id: 'canteen', title: 'Canteen & Food Court', icon: Coffee, iconBg: 'rgba(16,185,129,0.15)', iconColor: '#059669', desc: 'HUT CAFE, REC CAFE, 6th Sense Garden & Blackbuck Cafe food menus, crowd meter & reviews.', btnText: 'View Canteen Menu', btnColor: '#059669' },
+          { id: 'transport', title: 'Bus Transport Hub', icon: Bus, iconBg: 'rgba(59,130,246,0.15)', iconColor: '#2563eb', desc: '130 REC bus routes, morning & return trip schedules, stops search, and helpline contacts.', btnText: 'View Bus Routes & Schedules', btnColor: '#2563eb' }
+        ];
 
-        {/* Module 2 */}
-        <div className="card" onClick={() => setActiveModule('events')} style={{ cursor: 'pointer' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(168,85,247,0.18)', color: 'var(--rec-purple)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <PartyPopper size={24} />
-            </div>
-          </div>
-          <h3 style={{ fontSize: '19px', fontWeight: 800, marginBottom: '6px', color: 'var(--text-main)' }}>2. Events Feed & RSVP</h3>
-          <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '18px', lineHeight: '1.55' }}>
-            Events at Indoor auditorium, REC CAFE Lawn & J Block with instant Digital QR Entry Pass.
-          </p>
-          <div style={{ fontSize: '14px', color: 'var(--rec-purple)', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
-            Explore Events <ArrowRight size={15} />
-          </div>
-        </div>
+        const visibleModules = rawModules.filter(m => !m.hostellerOnly || isHostellerOrStaff);
+        const modules = visibleModules.map((m, index) => ({
+          ...m,
+          displayTitle: `${index + 1}. ${m.title}`
+        }));
 
-        {/* Module 3 */}
-        <div className="card" onClick={() => setActiveModule('lostFound')} style={{ cursor: 'pointer' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(16,185,129,0.15)', color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Search size={24} />
-            </div>
+        return (
+          <div className="grid-3" style={{ marginBottom: '36px' }}>
+            {modules.map((mod) => {
+              const Icon = mod.icon;
+              return (
+                <div key={mod.id} className="card" onClick={() => setActiveModule(mod.id)} style={{ cursor: 'pointer' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
+                    <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: mod.iconBg, color: mod.iconColor, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Icon size={24} />
+                    </div>
+                  </div>
+                  <h3 style={{ fontSize: '19px', fontWeight: 800, marginBottom: '6px', color: 'var(--text-main)' }}>{mod.displayTitle}</h3>
+                  <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '18px', lineHeight: '1.55' }}>
+                    {mod.desc}
+                  </p>
+                  <div style={{ fontSize: '14px', color: mod.btnColor, fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    {mod.btnText} <ArrowRight size={15} />
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          <h3 style={{ fontSize: '19px', fontWeight: 800, marginBottom: '6px', color: 'var(--text-main)' }}>3. Lost & Found Board</h3>
-          <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '18px', lineHeight: '1.55' }}>
-            Report missing items at HUT CAFE, REC CAFE, J Block or hostels with image file upload.
-          </p>
-          <div style={{ fontSize: '14px', color: '#059669', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
-            View Board <ArrowRight size={15} />
-          </div>
-        </div>
-
-        {/* Module 4 */}
-        <div className="card" onClick={() => setActiveModule('clubs')} style={{ cursor: 'pointer' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(245,158,11,0.15)', color: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Megaphone size={24} />
-            </div>
-          </div>
-          <h3 style={{ fontSize: '19px', fontWeight: 800, marginBottom: '6px', color: 'var(--text-main)' }}>4. Club Announcements</h3>
-          <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '18px', lineHeight: '1.55' }}>
-            Notices & recruitment drives for Coding Club, Rotaract, IEEE REC in Indoor auditorium.
-          </p>
-          <div style={{ fontSize: '14px', color: '#d97706', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
-            Open Club Portal <ArrowRight size={15} />
-          </div>
-        </div>
-
-        {/* Module 5 - Mess Menu & Ratings (Visible for Hostellers, Staff & Admins) */}
-        {isHostellerOrStaff && (
-          <div className="card" onClick={() => setActiveModule('mess')} style={{ cursor: 'pointer' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(239,68,68,0.15)', color: '#dc2626', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Utensils size={24} />
-              </div>
-            </div>
-            <h3 style={{ fontSize: '19px', fontWeight: 800, marginBottom: '6px', color: 'var(--text-main)' }}>5. Mess Menu & Ratings</h3>
-            <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '18px', lineHeight: '1.55' }}>
-              Weekly food menu for Pearl, Ruby, Emerald, Sapphire & Diamond Hostels with live ratings.
-            </p>
-            <div style={{ fontSize: '14px', color: '#dc2626', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
-              Check Mess Menu <ArrowRight size={15} />
-            </div>
-          </div>
-        )}
-
-        {/* Module 6 */}
-        <div className="card" onClick={() => setActiveModule('canteen')} style={{ cursor: 'pointer' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(16,185,129,0.15)', color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Coffee size={24} />
-            </div>
-          </div>
-          <h3 style={{ fontSize: '19px', fontWeight: 800, marginBottom: '6px', color: 'var(--text-main)' }}>6. Canteen & Food Court</h3>
-          <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '18px', lineHeight: '1.55' }}>
-            HUT CAFE, REC CAFE, 6th Sense Garden & Blackbuck Cafe food menus, crowd meter & reviews.
-          </p>
-          <div style={{ fontSize: '14px', color: '#059669', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
-            View Canteen Menu <ArrowRight size={15} />
-          </div>
-        </div>
-
-        {/* Module 7 */}
-        <div className="card" onClick={() => setActiveModule('transport')} style={{ cursor: 'pointer' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(59,130,246,0.15)', color: '#2563eb', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Bus size={24} />
-            </div>
-          </div>
-          <h3 style={{ fontSize: '19px', fontWeight: 800, marginBottom: '6px', color: 'var(--text-main)' }}>7. Bus Transport Hub</h3>
-          <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '18px', lineHeight: '1.55' }}>
-            130 REC bus routes, morning & return trip schedules, stops search, and helpline contacts.
-          </p>
-          <div style={{ fontSize: '14px', color: '#2563eb', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
-            View Bus Routes & Schedules <ArrowRight size={15} />
-          </div>
-        </div>
-      </div>
+        );
+      })()}
     </div>
   );
 }

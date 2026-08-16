@@ -100,7 +100,7 @@ export default function EventsModule() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px', flexWrap: 'wrap', gap: '16px' }}>
         <div>
           <h1 style={{ fontSize: '26px', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
-            <PartyPopper color="var(--rec-purple)" size={28} /> 2. Campus Events Feed & Digital RSVP
+            <PartyPopper color="var(--rec-purple)" size={28} /> Campus Events Feed & Digital RSVP
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '4px' }}>
             Discover upcoming tech hackathons, culturals, and workshops at Indoor auditorium, J Block & REC CAFE.

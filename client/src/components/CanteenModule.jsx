@@ -69,7 +69,7 @@ export default function CanteenModule() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px', flexWrap: 'wrap', gap: '16px' }}>
         <div>
           <h1 style={{ fontSize: '26px', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
-            <Coffee color="#059669" size={28} /> 6. College Canteen & Food Court Hub
+            <Coffee color="#059669" size={28} /> College Canteen & Food Court Hub
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '4px' }}>
             HUT CAFE, REC CAFE, 6th Sense Garden & Blackbuck Cafe menus, mocktails, barista brews, live crowd status, and dish ratings.

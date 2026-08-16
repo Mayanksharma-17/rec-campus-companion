@@ -83,7 +83,7 @@ export default function MessModule() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px', flexWrap: 'wrap', gap: '16px' }}>
         <div>
           <h1 style={{ fontSize: '26px', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
-            <Utensils color="#dc2626" size={28} /> 5. REC Hosteller Mess Menu & Dish Ratings
+            <Utensils color="#dc2626" size={28} /> REC Hosteller Mess Menu & Dish Ratings
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '4px' }}>
             Weekly meal schedule for Pearl, Ruby, Emerald, Sapphire & Diamond hostels, live mess rush gauge & dish ratings.
