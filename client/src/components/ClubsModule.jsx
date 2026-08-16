@@ -22,7 +22,7 @@ export default function ClubsModule() {
   // Join Club Modal
   const [showJoinModal, setShowJoinModal] = useState(false);
 
-  const canPost = user?.isClubLead || user?.isStaff || user?.isAdmin;
+  const canPost = user?.isClubMember || user?.isClubLead || (user?.clubsJoined && user.clubsJoined.length > 0) || user?.isStaff || user?.isAdmin;
 
   // Real-Time Multi-User Sync Effect
   useEffect(() => {

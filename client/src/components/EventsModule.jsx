@@ -107,14 +107,10 @@ export default function EventsModule() {
           </p>
         </div>
 
-        {canPublish ? (
+        {canPublish && (
           <button className="btn btn-primary" onClick={() => setShowCreateModal(true)}>
             <Plus size={16} /> Publish New Event
           </button>
-        ) : (
-          <span className="badge badge-warning" style={{ fontSize: '12px', padding: '6px 12px' }}>
-            <ShieldAlert size={14} /> Event Creation: Restricted to Club Leads / Staff / Admin
-          </span>
         )}
       </div>
 

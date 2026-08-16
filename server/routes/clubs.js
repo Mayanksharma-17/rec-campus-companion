@@ -46,10 +46,11 @@ router.get('/announcements', verifyToken, (req, res) => {
 // Post Announcement
 router.post('/announcements', verifyToken, (req, res) => {
   const db = getDatabase();
-  if (!req.user.isClubLead && !req.user.isStaff && !req.user.isAdmin) {
+  const hasClubPermission = req.user.isClubMember || req.user.isClubLead || (req.user.clubsJoined && req.user.clubsJoined.length > 0) || req.user.isStaff || req.user.isAdmin;
+  if (!hasClubPermission) {
     return res.status(403).json({
       success: false,
-      message: 'Permission Denied: Only Club Leads, Staff, or Admins can post official club announcements.'
+      message: 'Permission Denied: Only verified Club Members, Leads, Staff, or Admins can post announcements.'
     });
   }
 
