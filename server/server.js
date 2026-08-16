@@ -56,11 +56,15 @@ app.use((err, req, res, next) => {
   res.status(500).json({ success: false, message: 'Internal Server Error', error: err.message });
 });
 
-app.listen(PORT, () => {
-  console.log(`====================================================`);
-  console.log(`🚀 REC Campus Companion API Server Running!`);
-  console.log(`🌐 URL: http://localhost:${PORT}`);
-  console.log(`🔐 Auth Domain Restriction: @rajalakshmi.edu.in`);
-  console.log(`🚌 Bus Transport Module: /api/transport`);
-  console.log(`====================================================`);
-});
+module.exports = app;
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`====================================================`);
+    console.log(`🚀 REC Campus Companion API Server Running!`);
+    console.log(`🌐 URL: http://localhost:${PORT}`);
+    console.log(`🔐 Auth Domain Restriction: @rajalakshmi.edu.in`);
+    console.log(`🚌 Bus Transport Module: /api/transport`);
+    console.log(`====================================================`);
+  });
+}
