@@ -3,8 +3,8 @@ const router = express.Router();
 const { getDatabase, saveDatabase } = require('../data/dbPersistence');
 const { verifyToken, requireHosteller } = require('../middleware/auth');
 
-// Get Mess Menu & Feedback (Restricted to Hostellers & Admins)
-router.get('/', verifyToken, requireHosteller, (req, res) => {
+// Get Mess Menu & Feedback
+router.get('/', verifyToken, (req, res) => {
   const db = getDatabase();
   const day = req.query.day || 'Monday';
   const menu = db.messData.weeklyMenu[day] || db.messData.weeklyMenu['Monday'];

@@ -35,7 +35,6 @@ router.post('/registry-check', (req, res) => {
         department: matchedRegistry.department,
         year: matchedRegistry.year,
         isHosteller: matchedRegistry.isHosteller,
-        roomNumber: matchedRegistry.roomNumber || '',
         isClubLead: matchedRegistry.isClubLead,
         isClubMember: matchedRegistry.isClubMember,
         isStaff: matchedRegistry.isStaff,
