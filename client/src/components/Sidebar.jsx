@@ -88,48 +88,6 @@ export default function Sidebar() {
           </button>
         );
       })}
-
-      {/* User Status Privileges Box */}
-      {user && (
-        <div style={{
-          marginTop: 'auto',
-          background: 'var(--bg-card)',
-          border: '1px solid var(--border-color)',
-          borderRadius: '14px',
-          padding: '14px',
-          fontSize: '12px',
-          boxShadow: 'var(--shadow-card)'
-        }}>
-          <div style={{ fontWeight: 800, color: 'var(--text-main)', marginBottom: '8px', letterSpacing: '-0.01em' }}>
-            Active Campus Privileges:
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', color: 'var(--text-muted)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <CheckCircle2 size={13} color="#10b981" /> Timetable: <span style={{ color: 'var(--text-main)', fontWeight: 700 }}>Granted</span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <CheckCircle2 size={13} color="#10b981" /> Events & RSVP: <span style={{ color: 'var(--text-main)', fontWeight: 700 }}>Granted</span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <CheckCircle2 size={13} color="#10b981" /> Lost & Found: <span style={{ color: 'var(--text-main)', fontWeight: 700 }}>Granted</span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <CheckCircle2 size={13} color="#10b981" /> Club Notices: <span style={{ color: 'var(--text-main)', fontWeight: 700 }}>Granted</span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <CheckCircle2 size={13} color="#10b981" /> Canteen Hub: <span style={{ color: 'var(--text-main)', fontWeight: 700 }}>Granted</span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <CheckCircle2 size={13} color="#10b981" /> Bus Transport: <span style={{ color: 'var(--text-main)', fontWeight: 700 }}>Granted</span>
-            </div>
-            {isHostellerOrStaff && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <CheckCircle2 size={13} color="#10b981" /> Mess Ratings: <span style={{ color: 'var(--text-main)', fontWeight: 700 }}>Granted</span>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </aside>
   );
 }
