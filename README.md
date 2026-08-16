@@ -5,6 +5,13 @@
 
 ---
 
+## 🌐 Live Web Application & Deployment
+
+* **Production Live URL**: [https://rec-campus-companion.vercel.app/](https://rec-campus-companion.vercel.app/)
+* **Platform Status**: 🟢 Active & Deployed on Vercel Serverless Network
+
+---
+
 ## 📌 Platform Overview
 
 **REC Campus Companion** is an integrated, single-window digital utility hub designed specifically for **Rajalakshmi Engineering College (Thandalam, Chennai)**. The platform unifies daily campus operations, academic schedules, event management, hosteller mess services, canteen food court ordering, and campus transport logistics into a seamless, high-performance web experience.
@@ -105,19 +112,27 @@ Engineered with a cohesive design system—combining **Vercel Web Interface Guid
 
 ---
 
-## 💻 Local Installation & Setup
+## 💻 Deployment & Local Setup
 
-### Prerequisites
+### 🌐 Live Production Deployment
+Experience the live application deployed on Vercel:  
+👉 **[https://rec-campus-companion.vercel.app/](https://rec-campus-companion.vercel.app/)**
+
+---
+
+### 🖥️ Local Environment Setup
+
+#### Prerequisites
 * Node.js v18.0.0 or higher
 * npm v9.0.0 or higher
 
-### 1. Clone Repository & Install Dependencies
+#### 1. Clone Repository & Install Dependencies
 ```bash
-git clone https://github.com/inovxround1-collab/team1.git
-cd team1
+git clone https://github.com/Mayanksharma-17/rec-campus-companion.git
+cd rec-campus-companion
 ```
 
-### 2. Start Backend Server
+#### 2. Start Backend Server
 ```bash
 cd server
 npm install
@@ -125,7 +140,7 @@ node server.js
 ```
 *Backend server runs at **`http://localhost:5000`**.*
 
-### 3. Start Frontend Client
+#### 3. Start Frontend Client
 Open a secondary terminal:
 ```bash
 cd client
