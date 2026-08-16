@@ -15,6 +15,7 @@ export default function LoginPage() {
   const [department, setDepartment] = useState('CSE');
   const [year, setYear] = useState('2nd Year');
   const [isHosteller, setIsHosteller] = useState(false);
+  const [roomNumber, setRoomNumber] = useState('');
 
   // Status State
   const [loading, setLoading] = useState(false);
@@ -35,6 +36,7 @@ export default function LoginPage() {
         setDepartment(res.data.data.department);
         setYear(res.data.data.year);
         setIsHosteller(res.data.data.isHosteller);
+        if (res.data.data.roomNumber) setRoomNumber(res.data.data.roomNumber);
       } else {
         setRegistryInfo(null);
       }
@@ -80,7 +82,12 @@ export default function LoginPage() {
       if (mode === 'login') {
         await login(email, password);
       } else {
-        await register({ name, email, password, gender, department, year, isHosteller });
+        if (isHosteller && !roomNumber.trim()) {
+          setError('Hosteller Registration Required: Please provide your Hostel Room Number.');
+          setLoading(false);
+          return;
+        }
+        await register({ name, email, password, gender, department, year, isHosteller, roomNumber: roomNumber.trim() });
       }
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Authentication failed.');
@@ -313,6 +320,23 @@ export default function LoginPage() {
                     </select>
                   </div>
                 </div>
+
+                {isHosteller && (
+                  <div className="form-group" style={{ marginTop: '4px' }}>
+                    <label style={{ color: '#e2e8f0', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Building size={14} color="#a855f7" /> Hostel Room Number
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      style={{ background: 'rgba(30, 41, 59, 0.9)', color: '#ffffff', border: '1px solid rgba(168, 85, 247, 0.4)' }}
+                      placeholder="e.g. Room 204 or P-304"
+                      value={roomNumber}
+                      onChange={(e) => setRoomNumber(e.target.value)}
+                      required={isHosteller}
+                    />
+                  </div>
+                )}
               </>
             )}
 

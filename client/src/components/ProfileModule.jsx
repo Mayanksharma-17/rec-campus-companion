@@ -30,6 +30,7 @@ export default function ProfileModule() {
   const [department, setDepartment] = useState(user?.department || 'CSE');
   const [year, setYear] = useState(user?.year || '2nd Year');
   const [isHosteller, setIsHosteller] = useState(user?.isHosteller || false);
+  const [roomNumber, setRoomNumber] = useState(user?.roomNumber || '');
   const [designation, setDesignation] = useState(user?.designation || 'Pearl Hostel');
 
   const [loading, setLoading] = useState(false);
@@ -56,7 +57,7 @@ export default function ProfileModule() {
     try {
       setLoading(true);
       const res = await API.put('/auth/profile', {
-        name, pfpUrl, bio, phone, gender, department, year, isHosteller, designation
+        name, pfpUrl, bio, phone, gender, department, year, isHosteller, roomNumber, designation
       });
       if (res.data.success) {
         localStorage.setItem('rec_campus_token', res.data.token);
@@ -227,6 +228,18 @@ export default function ProfileModule() {
               </div>
             </div>
 
+            {isHosteller && (
+              <div className="form-group">
+                <label>Hostel Room Number</label>
+                <input
+                  className="form-control"
+                  placeholder="e.g. Room 204 or P-304"
+                  value={roomNumber}
+                  onChange={(e) => setRoomNumber(e.target.value)}
+                />
+              </div>
+            )}
+
             <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '12px', fontSize: '15px', marginTop: '14px', fontWeight: 800 }} disabled={loading}>
               <Save size={16} /> {loading ? 'Saving Changes...' : 'Save Profile Changes'}
             </button>
@@ -261,7 +274,9 @@ export default function ProfileModule() {
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Location / Hostel:</span>
-                <span style={{ fontWeight: 800, color: '#059669' }}>{designation}</span>
+                <span style={{ fontWeight: 800, color: '#059669' }}>
+                  {designation} {isHosteller && (roomNumber || user?.roomNumber) ? `(Room ${roomNumber || user?.roomNumber})` : ''}
+                </span>
               </div>
             </div>
           </div>

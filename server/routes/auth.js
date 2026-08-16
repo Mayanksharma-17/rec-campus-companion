@@ -35,6 +35,7 @@ router.post('/registry-check', (req, res) => {
         department: matchedRegistry.department,
         year: matchedRegistry.year,
         isHosteller: matchedRegistry.isHosteller,
+        roomNumber: matchedRegistry.roomNumber || '',
         isClubLead: matchedRegistry.isClubLead,
         isClubMember: matchedRegistry.isClubMember,
         isStaff: matchedRegistry.isStaff,
@@ -54,7 +55,7 @@ router.post('/registry-check', (req, res) => {
 // Endpoint: Register new account
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, password, gender, department, year, isHosteller } = req.body;
+    const { name, email, password, gender, department, year, isHosteller, roomNumber } = req.body;
     const db = getDatabase();
 
     if (!name || !email || !password) {
@@ -76,6 +77,17 @@ router.post('/register', async (req, res) => {
 
     const matchedRegistry = EMAIL_REGISTRY.find(item => item.email.toLowerCase() === cleanEmail);
     const passwordHash = await bcrypt.hash(password, 10);
+    const userIsHosteller = matchedRegistry ? matchedRegistry.isHosteller : Boolean(isHosteller);
+    const userRoomNumber = roomNumber ? roomNumber.trim() : (matchedRegistry && matchedRegistry.roomNumber ? matchedRegistry.roomNumber : '');
+
+    let userDesignation = 'Day Scholar Student';
+    if (userIsHosteller) {
+      userDesignation = userRoomNumber
+        ? `Hostel Resident (Room ${userRoomNumber})`
+        : (matchedRegistry ? matchedRegistry.designation : 'Pearl Hostel Resident');
+    } else if (matchedRegistry) {
+      userDesignation = matchedRegistry.designation;
+    }
 
     const newUser = {
       id: `usr-${Date.now()}`,
@@ -86,13 +98,14 @@ router.post('/register', async (req, res) => {
       department: department || (matchedRegistry ? matchedRegistry.department : 'CSE'),
       year: year || (matchedRegistry ? matchedRegistry.year : '2nd Year'),
       role: matchedRegistry ? matchedRegistry.role : 'student',
-      isHosteller: matchedRegistry ? matchedRegistry.isHosteller : Boolean(isHosteller),
+      isHosteller: userIsHosteller,
+      roomNumber: userRoomNumber,
       isClubLead: matchedRegistry ? matchedRegistry.isClubLead : false,
       isClubMember: matchedRegistry ? matchedRegistry.isClubMember : false,
       isStaff: matchedRegistry ? matchedRegistry.isStaff : false,
       isAdmin: matchedRegistry ? matchedRegistry.role === 'admin' : false,
       clubsJoined: matchedRegistry ? matchedRegistry.clubsJoined : [],
-      designation: matchedRegistry ? matchedRegistry.designation : (Boolean(isHosteller) ? 'Pearl Hostel Resident' : 'Day Scholar Student'),
+      designation: userDesignation,
       pfpUrl: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name.trim())}`,
       bio: 'Official REC Campus Companion User',
       phone: '+91 98765 43210',
@@ -111,6 +124,7 @@ router.post('/register', async (req, res) => {
       year: newUser.year,
       role: newUser.role,
       isHosteller: newUser.isHosteller,
+      roomNumber: newUser.roomNumber,
       isClubLead: newUser.isClubLead,
       isClubMember: newUser.isClubMember,
       isStaff: newUser.isStaff,
@@ -170,6 +184,7 @@ router.post('/login', async (req, res) => {
       year: user.year,
       role: user.role,
       isHosteller: user.isHosteller,
+      roomNumber: user.roomNumber || '',
       isClubLead: user.isClubLead,
       isClubMember: user.isClubMember,
       isStaff: user.isStaff,
@@ -218,6 +233,7 @@ router.post('/demo-switch', (req, res) => {
         year: matchedRegistry.year,
         role: matchedRegistry.role,
         isHosteller: matchedRegistry.isHosteller,
+        roomNumber: matchedRegistry.roomNumber || '',
         isClubLead: matchedRegistry.isClubLead,
         isClubMember: matchedRegistry.isClubMember,
         isStaff: matchedRegistry.isStaff,
@@ -244,6 +260,7 @@ router.post('/demo-switch', (req, res) => {
     year: user.year,
     role: user.role,
     isHosteller: user.isHosteller,
+    roomNumber: user.roomNumber || '',
     isClubLead: user.isClubLead,
     isClubMember: user.isClubMember,
     isStaff: user.isStaff,
@@ -274,6 +291,7 @@ router.get('/me', verifyToken, (req, res) => {
     req.user.bio = user.bio || req.user.bio;
     req.user.phone = user.phone || req.user.phone;
     req.user.designation = user.designation || req.user.designation;
+    req.user.roomNumber = user.roomNumber || req.user.roomNumber || '';
   }
   res.json({
     success: true,
@@ -289,7 +307,7 @@ router.put('/profile', verifyToken, (req, res) => {
     return res.status(404).json({ success: false, message: 'User not found.' });
   }
 
-  const { name, pfpUrl, bio, phone, gender, department, year, isHosteller, designation } = req.body;
+  const { name, pfpUrl, bio, phone, gender, department, year, isHosteller, roomNumber, designation } = req.body;
 
   if (name) user.name = name.trim();
   if (pfpUrl) user.pfpUrl = pfpUrl;
@@ -300,6 +318,7 @@ router.put('/profile', verifyToken, (req, res) => {
   if (year) user.year = year;
   if (designation) user.designation = designation;
   if (typeof isHosteller !== 'undefined') user.isHosteller = Boolean(isHosteller);
+  if (typeof roomNumber !== 'undefined') user.roomNumber = roomNumber.trim();
 
   saveDatabase();
 
@@ -312,6 +331,7 @@ router.put('/profile', verifyToken, (req, res) => {
     year: user.year,
     role: user.role,
     isHosteller: user.isHosteller,
+    roomNumber: user.roomNumber || '',
     isClubLead: user.isClubLead,
     isClubMember: user.isClubMember,
     isStaff: user.isStaff,

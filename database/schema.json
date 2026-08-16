@@ -18,6 +18,7 @@
           "department": { "type": "string" },
           "year": { "type": "string" },
           "isHosteller": { "type": "boolean" },
+          "roomNumber": { "type": "string" },
           "isStaff": { "type": "boolean" },
           "isAdmin": { "type": "boolean" },
           "isClubLead": { "type": "boolean" },
