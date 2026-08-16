@@ -13,7 +13,7 @@ export const DEMO_ACCOUNTS = [
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('token') || null);
+  const [token, setToken] = useState(localStorage.getItem('rec_campus_token') || null);
   const [loading, setLoading] = useState(true);
   
   // Theme Engine (Dark / Light Mode)
@@ -95,11 +95,13 @@ export const AuthProvider = ({ children }) => {
   // Load User Profile on Mount
   useEffect(() => {
     const initAuth = async () => {
-      if (token) {
+      const storedToken = localStorage.getItem('rec_campus_token');
+      if (storedToken) {
         try {
           const res = await API.get('/auth/me');
           if (res.data.success) {
             setUser(res.data.user);
+            setToken(storedToken);
           } else {
             logout();
           }
@@ -111,13 +113,13 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     };
     initAuth();
-  }, [token]);
+  }, []);
 
   const login = async (email, password) => {
     const res = await API.post('/auth/login', { email, password });
     if (res.data.success) {
       const newToken = res.data.token;
-      localStorage.setItem('token', newToken);
+      localStorage.setItem('rec_campus_token', newToken);
       setToken(newToken);
       setUser(res.data.user);
       return res.data;
@@ -128,7 +130,7 @@ export const AuthProvider = ({ children }) => {
     const res = await API.post('/auth/register', userData);
     if (res.data.success) {
       const newToken = res.data.token;
-      localStorage.setItem('token', newToken);
+      localStorage.setItem('rec_campus_token', newToken);
       setToken(newToken);
       setUser(res.data.user);
       return res.data;
@@ -139,7 +141,7 @@ export const AuthProvider = ({ children }) => {
     const res = await API.post('/auth/demo-switch', { email });
     if (res.data.success) {
       const newToken = res.data.token;
-      localStorage.setItem('token', newToken);
+      localStorage.setItem('rec_campus_token', newToken);
       setToken(newToken);
       setUser(res.data.user);
       return res.data;
@@ -147,7 +149,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('rec_campus_token');
     setToken(null);
     setUser(null);
     window.location.hash = '#dashboard';
